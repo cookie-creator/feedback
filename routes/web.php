@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/test', [\App\Http\Controllers\TestController::class, 'index']);
 Route::get('/', function () {
     return view('welcome');
 });
@@ -23,8 +24,10 @@ Route::middleware(['auth'])->group(function () {
         'middleware' => 'is_manager',
         'as' => 'manager.'
     ], function () {
-        Route::get('/feedback', [\App\Http\Controllers\Manager\FeedbackController::class, 'index'])
-            ->name('feedback.index');
+        Route::resource('/feedback', \App\Http\Controllers\Manager\FeedbackController::class);
+
+        /*Route::get('/feedback', [\App\Http\Controllers\Manager\FeedbackController::class, 'index'])
+            ->name('feedback.index');*/
     });
 
     Route::group([
@@ -32,13 +35,15 @@ Route::middleware(['auth'])->group(function () {
         'middleware' => 'is_client',
         'as' => 'client.'
     ], function () {
-        Route::get('/feedback', [\App\Http\Controllers\Client\FeedbackController::class, 'index'])
-            ->name('feedback.index');
+        Route::resource('/feedback', \App\Http\Controllers\Client\FeedbackController::class);
+
+        /*Route::get('/feedback', [\App\Http\Controllers\Client\FeedbackController::class, 'index'])
+            ->name('feedback.index');*/
     });
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/', function () {
+    return view('welcome');
 })->middleware(['auth'])->name('dashboard');
 
 require __DIR__.'/auth.php';
