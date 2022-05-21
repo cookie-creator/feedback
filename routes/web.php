@@ -17,6 +17,26 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::middleware(['auth'])->group(function () {
+    Route::group([
+        'prefix' => 'manager',
+        'middleware' => 'is_manager',
+        'as' => 'manager.'
+    ], function () {
+        Route::get('/feedback', [\App\Http\Controllers\Manager\FeedbackController::class, 'index'])
+            ->name('feedback.index');
+    });
+
+    Route::group([
+        'prefix' => 'client',
+        'middleware' => 'is_client',
+        'as' => 'client.'
+    ], function () {
+        Route::get('/feedback', [\App\Http\Controllers\Client\FeedbackController::class, 'index'])
+            ->name('feedback.index');
+    });
+});
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

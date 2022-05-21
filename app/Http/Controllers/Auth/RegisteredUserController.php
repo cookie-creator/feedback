@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -44,6 +46,22 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+
+        // Add client role to user
+        $client = new Role();
+        $client->name = 'client';
+        $client->label = 'client';
+        $client->save();
+
+        $user->assignRole($client);
+
+        // Allow user to create feedback
+        $createFeedback = new Permission();
+        $createFeedback->name = 'crate_feedback';
+        $createFeedback->label = 'crate_feedback';
+        $createFeedback->save();
+
+        $user->allowTo($createFeedback);
 
         event(new Registered($user));
 
