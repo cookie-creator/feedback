@@ -61,12 +61,12 @@ class RegisteredUserController extends Controller
         $createFeedback->label = 'crate_feedback';
         $createFeedback->save();
 
-        $user->allowTo($createFeedback);
+        $client->allowTo($createFeedback);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(RouteServiceProvider::HOME);
+        return redirect()->route('client.feedback.index');
     }
 }
