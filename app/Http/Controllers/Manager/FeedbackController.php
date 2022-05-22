@@ -22,7 +22,7 @@ class FeedbackController extends Controller
     {
         $feedbacks = $repo->getFeedbacks();
 
-        return view('bookmark.home', compact(['feedbacks']));
+        return view('layouts.manager.dashboard', compact(['feedbacks']));
     }
 
     /**
