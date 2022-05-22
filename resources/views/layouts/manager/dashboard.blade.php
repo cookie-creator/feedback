@@ -10,6 +10,18 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     Manager page
+
+                    @foreach($feedbacks as $feedback)
+
+                        <div>
+                            <p>{{ $feedback->name }}</p>
+                            <p>{{ $feedback->email }}</p>
+                            <p>{{ $feedback->subject }}</p>
+                            <p>{{ $feedback->feedback }}</p>
+                            <p>{{ $feedback->answered }}</p>
+                        </div>
+
+                    @endforeach
                 </div>
             </div>
         </div>

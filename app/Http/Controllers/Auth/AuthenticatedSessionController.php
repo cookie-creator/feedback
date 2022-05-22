@@ -33,7 +33,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         return (auth()->user()->isManager()) ?
-            redirect()->route('manager.feedback.index')  : redirect()->route('client.feedback.index');
+            redirect()->route('manager.feedback.index') : redirect()->route('client.feedback.index');
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Models\Feedback;
+
 class FeedbackFileHelper
 {
     public function __construct()
@@ -11,6 +13,7 @@ class FeedbackFileHelper
 
     /**
      * @param Request $request
+     * @return string fileName
      */
     public function storeFile($request)
     {
@@ -27,5 +30,23 @@ class FeedbackFileHelper
         }
 
         return $fileNameToStore;
+    }
+
+    /**
+     * @param Feedback $feedback
+     * @return string pathTofile
+     */
+    public function getFilePathToAttach(Feedback $feedback)
+    {
+        return 'public/files/' . $feedback->file;
+    }
+
+    /**
+     * @param Feedback $feedback
+     * @return string urlToFile
+     */
+    public function getFileUrl(Feedback $feedback)
+    {
+        return config('app.url') . 'storage/files/' . $feedback->file;
     }
 }

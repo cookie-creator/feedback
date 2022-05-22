@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email');
             $table->string('subject');
             $table->string('file');
+            $table->integer('answered')->default(0);
             $table->text('feedback');
             $table->foreignId('user_id')->constrained();
             $table->timestamps();

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/test', [\App\Http\Controllers\TestController::class, 'index']);
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
     Route::group([
@@ -25,9 +25,6 @@ Route::middleware(['auth'])->group(function () {
         'as' => 'manager.'
     ], function () {
         Route::resource('/feedback', \App\Http\Controllers\Manager\FeedbackController::class);
-
-        /*Route::get('/feedback', [\App\Http\Controllers\Manager\FeedbackController::class, 'index'])
-            ->name('feedback.index');*/
     });
 
     Route::group([
@@ -36,14 +33,11 @@ Route::middleware(['auth'])->group(function () {
         'as' => 'client.'
     ], function () {
         Route::resource('/feedback', \App\Http\Controllers\Client\FeedbackController::class);
-
-        /*Route::get('/feedback', [\App\Http\Controllers\Client\FeedbackController::class, 'index'])
-            ->name('feedback.index');*/
     });
 });
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('welcome');
-})->middleware(['auth'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');*/
 
 require __DIR__.'/auth.php';

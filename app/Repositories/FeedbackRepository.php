@@ -43,14 +43,13 @@ class FeedbackRepository
 
     /**
      * @param  int  $idUser
-     * @param  int  $idFeedback
      * @return App\Models\Feedback
      */
-    public function getLastUserFeedback($idUser, $idFeedback)
+    public function getLastUserFeedback($idUser)
     {
-        return Feedback::where('id',$idFeedback)
-            ->where('user_id',$idUser)
-            ->firstOrFail();
+        return Feedback::where('user_id',$idUser)
+            ->orderBy('created_at', 'desc')
+            ->first();
     }
 
     /**

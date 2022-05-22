@@ -21,9 +21,11 @@ class FeedbackController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(FeedbackService $service)
     {
-        return view('layouts.client.dashboard');
+        $feedback = $service->isClientCanSendFeedback(auth()->user()->id);
+
+        return view('layouts.client.dashboard', compact(['feedback']));
     }
 
     /**
@@ -42,7 +44,10 @@ class FeedbackController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreFeedbackRequest $request, FeedbackRepository $repo, FeedbackService $service, FeedbackFileHelper $fileHelper)
+    public function store(StoreFeedbackRequest $request,
+                          FeedbackRepository $repo,
+                          FeedbackService $service,
+                          FeedbackFileHelper $fileHelper)
     {
         $data = $request->validated();
 
@@ -50,9 +55,9 @@ class FeedbackController extends Controller
 
         $feedback = $repo->store(auth()->user()->id, $data);
 
-        $service->sendFeedback($feedback);
+        $service->sendEmailFeedback($feedback);
 
-        return back();
+        return redirect()->back()->with('message', 'Your feedback was sent');
     }
 
     /**
