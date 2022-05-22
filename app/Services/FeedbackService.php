@@ -44,7 +44,7 @@ class FeedbackService
             ->subHours(24)->cascade()->forHumans();
 
         return (object)[
-            "canSend" => (Carbon::now()->floatDiffInHours($feedback->created_at) >= 0),
+            "canSend" => (Carbon::now()->floatDiffInHours($feedback->created_at) >= 24),
             "wait" => $interval
         ];
     }

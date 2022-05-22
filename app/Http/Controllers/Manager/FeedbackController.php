@@ -63,9 +63,11 @@ class FeedbackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, FeedbackRepository $feedbackRepository)
     {
-        //
+        $feedbackRepository->switchToAnswered($id);
+
+        return redirect()->back();
     }
 
     /**
@@ -75,9 +77,9 @@ class FeedbackController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+
     }
 
     /**
