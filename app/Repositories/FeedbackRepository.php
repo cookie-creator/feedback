@@ -84,4 +84,13 @@ class FeedbackRepository
         }
         return false;
     }
+
+    /**
+     * @param  int  $idFeedback
+     */
+    public function switchToAnswered($idFeedback)
+    {
+        return Feedback::where('id',$idFeedback)
+            ->update(['answered' => 1]);
+    }
 }
